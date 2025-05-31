@@ -1,4 +1,4 @@
-# streamlit_app.py – KI-Demo mit Schritt-für-Schritt Aufbau und Code-Einblick
+# streamlit_app.py – KI-Demo mit Schritt-für-Schritt Aufbau und Code-Einblick (ohne verschachtelte Expander)
 
 import streamlit as st
 import pandas as pd
@@ -33,8 +33,8 @@ with st.expander("📦 Schritt 1: Datensatz laden und betrachten"):
     st.dataframe(df.head())
     X = df[['sepal length (cm)', 'petal length (cm)']]
     y = df['target']
-    with st.expander("🔍 Code anzeigen"):
-        st.code("""
+
+st.expander("🔍 Code zu Schritt 1 anzeigen").code("""
 from sklearn.datasets import load_iris
 import pandas as pd
 
@@ -42,7 +42,7 @@ data = load_iris(as_frame=True)
 df = data.frame
 X = df[['sepal length (cm)', 'petal length (cm)']]
 y = df['target']
-        """)
+""")
 
 # Abschnitt 2: Modell trainieren
 with st.expander("🧪 Schritt 2: Modell trainieren"):
@@ -50,13 +50,13 @@ with st.expander("🧪 Schritt 2: Modell trainieren"):
     model = DecisionTreeClassifier()
     model.fit(X, y)
     st.success("Das Modell wurde erfolgreich trainiert.")
-    with st.expander("🔍 Code anzeigen"):
-        st.code("""
+
+st.expander("🔍 Code zu Schritt 2 anzeigen").code("""
 from sklearn.tree import DecisionTreeClassifier
 
 model = DecisionTreeClassifier()
 model.fit(X, y)
-        """)
+""")
 
 # Abschnitt 3: Entscheidungsbaum anzeigen
 with st.expander("🌳 Schritt 3: So denkt der Entscheidungsbaum"):
@@ -64,15 +64,15 @@ with st.expander("🌳 Schritt 3: So denkt der Entscheidungsbaum"):
     fig, ax = plt.subplots(figsize=(12, 6))
     plot_tree(model, feature_names=X.columns, class_names=data.target_names, filled=True, ax=ax)
     st.pyplot(fig)
-    with st.expander("🔍 Code anzeigen"):
-        st.code("""
+
+st.expander("🔍 Code zu Schritt 3 anzeigen").code("""
 from sklearn.tree import plot_tree
 import matplotlib.pyplot as plt
 
 fig, ax = plt.subplots(figsize=(12, 6))
 plot_tree(model, feature_names=X.columns, class_names=data.target_names, filled=True, ax=ax)
 st.pyplot(fig)
-        """)
+""")
 
 # Abschnitt 4: Eigene Eingaben testen
 with st.expander("🎯 Schritt 4: Probieren Sie es selbst aus"):
@@ -89,14 +89,13 @@ with st.expander("🎯 Schritt 4: Probieren Sie es selbst aus"):
     st.subheader("✨ Das Ergebnis Ihrer Eingabe:")
     st.markdown(f"<div style='font-size:32px; padding:10px; border-radius:8px; background-color:#f0f0f0; text-align:center;'>🌼 Die KI erkennt: <strong>{flower.upper()}</strong></div>", unsafe_allow_html=True)
 
-    with st.expander("🔍 Code anzeigen"):
-        st.code("""
+st.expander("🔍 Code zu Schritt 4 anzeigen").code("""
 import pandas as pd
 
 sample = pd.DataFrame([[sepal_length, petal_length]], columns=X.columns)
 prediction = model.predict(sample)[0]
 flower = data.target_names[prediction]
-        """)
+""")
 
 # Fußnote
 st.caption("Hinweis: Diese Demo nutzt bewusst nur zwei von vier Merkmalen des Iris-Datensatzes, um die Funktionsweise eines KI-Modells anschaulich zu machen.")
